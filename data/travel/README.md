@@ -1,4 +1,4 @@
-# Open-Travel (Coming Soon)
+# Open-Travel
 
 This directory contains the **RL Training Set** and the **Test Set** (categorized by subtask) for the Open-Travel domain.
 
@@ -30,3 +30,6 @@ In the Open-Travel domain, the agent is required to help users accomplish itiner
 | [`compare_itinerary.jsonl`](test/compare_itinerary.jsonl) | **50**  | Compare   | Transportation-mode comparison.                   |
 | [`one_day_travel.jsonl`](test/one_day_travel.jsonl)       | **50**  | 1-Day     | One-day trip planning in a single city.           |
 | [`multi_day_travel.jsonl`](test/multi_day_travel.jsonl)   | **50**  | M-Day     | Multi-day trip planning (Generalization task).    |
+
+## License
+The dataset files listed in this directory are licensed under the [Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0)](https://creativecommons.org/licenses/by-nc/4.0/).

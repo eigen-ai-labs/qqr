@@ -1,4 +1,4 @@
-# Open-DeepResearch (Coming Soon)
+# Open-DeepResearch
 
 This directory contains the **RL Training Set** and the **Test Set** for the Open-DeepResearch domain.
 
@@ -32,3 +32,6 @@ The samples in these files cover the following categories:
 1.  **Technical Writing:** Assisting users in writing open-ended technical documents (e.g., reports, design documents, or survey-style overviews).
 2.  **Ideation & Expansion:** Helping users ideate, expand, or refine research topics, solution plans, or content outlines.
 3.  **Explanation & Summarization:** Providing concise yet informative explanations, overviews, or summaries of complex concepts, systems, or domains.
+
+## License
+The dataset files listed in this directory are licensed under the [Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0)](https://creativecommons.org/licenses/by-nc/4.0/).
