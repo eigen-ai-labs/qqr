@@ -7,6 +7,8 @@
     </p>
 </h4>
 
+🤗 [HuggingFace](https://huggingface.co/collections/Alibaba-NLP/arenarl) | 🤖 [ModelScope](https://modelscope.cn/datasets/iic/Open-Travel) | 📰 [Blog](https://tongyi-agent.github.io/zh/blog/arenarl/) | 📰 [Paper](https://huggingface.co/papers/2601.06487)
+
 `qqr` 是一个轻量级、非侵入式的 [`slime`](https://github.com/THUDM/slime) 扩展库。集成了 [Model Context Protocol (MCP)](https://github.com/modelcontextprotocol)，通过 **ArenaRL** 算法实现开放域智能体的进化。
 
 ## 🌟 核心特性
