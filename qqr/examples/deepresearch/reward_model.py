@@ -8,25 +8,18 @@ from openai import AsyncOpenAI
 from qqr.reward_models import get_reward_model
 from qqr.schemas import LLMJudge, Sample
 
-from .config import (
-    GROUP_REWARD_MODEL_NAME,
-    LLM_JUDGE_API_KEY,
-    LLM_JUDGE_BASE_URL,
-    LLM_JUDGE_CONCURRENCY_LIMIT,
-    LLM_JUDGE_MODEL,
-    LLM_JUDGE_SYSTEM_PROMPT,
-)
+from . import config
 
 logger = logging.getLogger(__name__)
 
 
 class DeepResearchLLMJudge(LLMJudge):
     def __init__(self):
-        self.system_prompt = LLM_JUDGE_SYSTEM_PROMPT
-        self.model = LLM_JUDGE_MODEL
+        self.system_prompt = config.llm_judge_system_prompt
+        self.model = config.llm_judge_model
         self._client = None
 
-        self.concurrency_limit = LLM_JUDGE_CONCURRENCY_LIMIT
+        self.concurrency_limit = config.llm_judge_concurrency_limit
         self._semaphore: asyncio.Semaphore | None = None
 
         self.score_a_pattern = re.compile(
@@ -45,8 +38,8 @@ class DeepResearchLLMJudge(LLMJudge):
     def client(self) -> AsyncOpenAI:
         if self._client is None:
             self._client = AsyncOpenAI(
-                api_key=LLM_JUDGE_API_KEY,
-                base_url=LLM_JUDGE_BASE_URL,
+                api_key=config.llm_judge_api_key,
+                base_url=config.llm_judge_base_url,
                 timeout=60,
                 max_retries=10,
             )
@@ -146,7 +139,7 @@ class DeepResearchLLMJudge(LLMJudge):
 
 
 llm_judge = DeepResearchLLMJudge()
-group_reward_model = get_reward_model(GROUP_REWARD_MODEL_NAME)(llm_judge)
+group_reward_model = get_reward_model(config.group_reward_model_name)(llm_judge)
 
 
 async def eval_reward(args: Namespace, sample: Sample, **kwargs):

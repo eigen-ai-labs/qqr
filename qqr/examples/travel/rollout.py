@@ -10,7 +10,7 @@ from qqr.rollout.agent_rollout import GenerateState, MCPState
 from qqr.rollout.agent_rollout import generate as base_generate
 from qqr.schemas import Sample
 
-from .config import MAX_STEPS, mcp_server_config_fn
+from . import config
 from .reward_model import eval_reward
 
 logger = logging.getLogger(__name__)
@@ -22,7 +22,7 @@ async def generate(
     sampling_params: dict[str, Any],
     evaluation: bool = False,
 ) -> Sample | list[Sample]:
-    await MCPState(mcp_server_config_fn).get_mcp_servers()
+    await MCPState(config.mcp_server_config_fn).get_mcp_servers()
 
     if isinstance(sample.prompt, str):
         sample.messages = [{"role": "user", "content": sample.prompt}]
@@ -53,10 +53,10 @@ async def agent_loop(
     args: Namespace,
     sample: Sample,
     sampling_params: dict[str, Any],
-    max_steps: int = MAX_STEPS,
+    max_steps: int = config.max_steps,
 ) -> list[Sample]:
     state = GenerateState(args)
-    mcp_state = MCPState(mcp_server_config_fn)
+    mcp_state = MCPState(config.mcp_server_config_fn)
     prompter = Qwen3Prompt()
 
     if sample.messages[0]["role"] != "system":
@@ -72,8 +72,8 @@ async def agent_loop(
                 prompt=sample.prompt,
                 label=sample.label,
                 status=Sample.Status.PENDING,
-                metadata={"tools": mcp_state.tools},
-                train_metadata=sample.train_metadata,
+                metadata=sample.metadata,
+                train_metadata={"tools": mcp_state.tools},
             )
         )
         sample = samples[-1]
@@ -105,8 +105,8 @@ async def agent_loop(
                 prompt=sample.prompt,
                 label=sample.label,
                 status=Sample.Status.PENDING,
-                metadata={},
-                train_metadata=sample.train_metadata,
+                metadata=sample.metadata,
+                train_metadata=None,
             )
         )
         sample = samples[-1]

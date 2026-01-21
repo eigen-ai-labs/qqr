@@ -3,17 +3,17 @@ from qqr.utils.envs import (
     BAILIAN_WEB_SEARCH_API_KEY,
     DASHSCOPE_API_KEY,
     DASHSCOPE_BASE_URL,
+    PYTHONPATH,
 )
 
 __all__ = [
-    "GROUP_REWARD_MODEL_NAME",
-    "MAX_STEPS",
-    "LLM_JUDGE_API_KEY",
-    "LLM_JUDGE_BASE_URL",
-    "LLM_JUDGE_MODEL",
-    "LLM_JUDGE_CONCURRENCY_LIMIT",
-    "LLM_JUDGE_SYSTEM_PROMPT",
-    "BAILIAN_WEB_SEARCH_API_KEY",
+    "group_reward_model_name",
+    "max_steps",
+    "llm_judge_api_key",
+    "llm_judge_base_url",
+    "llm_judge_model",
+    "llm_judge_concurrency_limit",
+    "llm_judge_system_prompt",
     "mcp_server_config_fn",
 ]
 
@@ -23,7 +23,10 @@ def mcp_server_config_fn() -> list[MCPServer]:
     web_search_server_params = MCPServerStdioParams(
         command="python",
         args=["-m", "qqr.tools.web_search"],
-        env={"BAILIAN_WEB_SEARCH_API_KEY": BAILIAN_WEB_SEARCH_API_KEY},
+        env={
+            "BAILIAN_WEB_SEARCH_API_KEY": BAILIAN_WEB_SEARCH_API_KEY,
+            "PYTHONPATH": PYTHONPATH,
+        },
     )
     web_search_server = MCPServerStdioCacheable(
         name="WebSearch",
@@ -40,7 +43,7 @@ def mcp_server_config_fn() -> list[MCPServer]:
     return [web_search_server]
 
 
-MAX_STEPS = 10
+max_steps = 10
 
 
 # Select topology:
@@ -49,13 +52,13 @@ MAX_STEPS = 10
 # - double_elimination
 # - single_elimination
 # - round_robin
-GROUP_REWARD_MODEL_NAME = "anchor"
+group_reward_model_name = "anchor"
 
-LLM_JUDGE_API_KEY = DASHSCOPE_API_KEY
-LLM_JUDGE_BASE_URL = DASHSCOPE_BASE_URL
-LLM_JUDGE_MODEL = "qwen-plus"
-LLM_JUDGE_CONCURRENCY_LIMIT = 10
-LLM_JUDGE_SYSTEM_PROMPT = """你是一名精通信息检索方法论、具备严谨逻辑思维与系统化评测能力的「深度研究 LLM 代理综合评审员」。现需对同一用户 Query 下，LLM Agent A 与 Agent B 的研究路径（Path，指首次回复中呈现的【研究步骤】及后续各轮工具调用日志）和最终回答（Answer，指完成全部检索后最后一次向用户展示的内容）进行分维度量化评估，并最终给出综合得分与胜者。请严格遵循下列指标、打分规则与输出格式。
+llm_judge_api_key = DASHSCOPE_API_KEY
+llm_judge_base_url = DASHSCOPE_BASE_URL
+llm_judge_model = "qwen-plus"
+llm_judge_concurrency_limit = 10
+llm_judge_system_prompt = """你是一名精通信息检索方法论、具备严谨逻辑思维与系统化评测能力的「深度研究 LLM 代理综合评审员」。现需对同一用户 Query 下，LLM Agent A 与 Agent B 的研究路径（Path，指首次回复中呈现的【研究步骤】及后续各轮工具调用日志）和最终回答（Answer，指完成全部检索后最后一次向用户展示的内容）进行分维度量化评估，并最终给出综合得分与胜者。请严格遵循下列指标、打分规则与输出格式。
 
 一、评估内容格式
 
