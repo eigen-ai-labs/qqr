@@ -25,8 +25,8 @@ DASHSCOPE_BASE_URL = os.getenv(
 # Search
 BAILIAN_WEB_SEARCH_API_KEY = os.getenv("BAILIAN_WEB_SEARCH_API_KEY")
 
-SERPER_API_KEY = os.getenv("SERPER_API_KEY")
-SERPER_URL = os.getenv("SERPER_URL", "https://serpapi.com/search")
+SERPAPI_API_KEY = os.getenv("SERP_API_KEY")
+SERPAPI_BASE_URL = os.getenv("SERPAPI_BASE_URL", "https://serpapi.com/search")
 
 # Map
 GOOGLE_MAPS_API_KEY = os.getenv("GOOGLE_MAPS_API_KEY")
