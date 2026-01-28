@@ -17,6 +17,9 @@ DASHSCOPE_BASE_URL = os.getenv(
     "DASHSCOPE_BASE_URL", "https://dashscope.aliyuncs.com/compatible-mode/v1"
 )
 
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
+OPENROUTER_BASE_URL = os.getenv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1")
+
 # endregion
 
 
@@ -25,8 +28,8 @@ DASHSCOPE_BASE_URL = os.getenv(
 # Search
 BAILIAN_WEB_SEARCH_API_KEY = os.getenv("BAILIAN_WEB_SEARCH_API_KEY")
 
-SERPAPI_API_KEY = os.getenv("SERP_API_KEY")
-SERPAPI_BASE_URL = os.getenv("SERPAPI_BASE_URL", "https://serpapi.com/search")
+SERPER_API_KEY = os.getenv("SERPER_API_KEY")
+SERPER_URL = os.getenv("SERPER_URL", "https://serpapi.com/search")
 
 # Map
 GOOGLE_MAPS_API_KEY = os.getenv("GOOGLE_MAPS_API_KEY")

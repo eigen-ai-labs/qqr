@@ -8,16 +8,16 @@ mcp = FastMCP("GoogleMaps", log_level="WARNING")
 
 """
 SerpApi Google Maps API
-API 文档:
+Docs:
   - Places: https://serpapi.com/google-maps-api
   - Directions: https://serpapi.com/google-maps-directions-api
-获取方式: https://serpapi.com/manage-api-key
-环境变量名为: SERP_API_KEY
+API Key: https://serpapi.com/manage-api-key
+Environment variable: SERPER_API_KEY
 """
 
 # Environment variables
-SERPAPI_API_KEY = os.getenv("SERP_API_KEY")
-SERPAPI_BASE_URL = os.getenv("SERPAPI_BASE_URL", "https://serpapi.com/search")
+SERPER_API_KEY = os.getenv("SERPER_API_KEY")
+SERPER_URL = os.getenv("SERPER_URL", "https://serpapi.com/search")
 
 
 # ========== Inline helpers (to avoid qqr package import issues) ==========
@@ -88,7 +88,7 @@ def _truncate_text(text, max_len=5000):
     else:
         tail = tail_part
     truncated_chars = len(text) - len(head) - len(tail)
-    ellipsis = f"\n\n... [内容已截断，共省略 {truncated_chars} 字符] ...\n\n"
+    ellipsis = f"\n\n... [truncated {truncated_chars} chars] ...\n\n"
     return head + ellipsis + tail
 
 
@@ -118,14 +118,14 @@ async def poi_search(query: str, location: str | None = None) -> str:
         "engine": "google_maps",
         "q": query,
         "type": "search",
-        "api_key": SERPAPI_API_KEY,
+        "api_key": SERPER_API_KEY,
     }
 
     if location:
         params["q"] = f"{query} {location}"
 
     async with httpx.AsyncClient(timeout=60) as client:
-        response = await client.get(SERPAPI_BASE_URL, params=params)
+        response = await client.get(SERPER_URL, params=params)
         response.raise_for_status()
         result = response.json()
 
@@ -175,7 +175,7 @@ async def around_search(
         "engine": "google_maps",
         "q": search_query,
         "type": "search",
-        "api_key": SERPAPI_API_KEY,
+        "api_key": SERPER_API_KEY,
     }
 
     # Check if location is coordinates (contains comma and numbers)
@@ -190,7 +190,7 @@ async def around_search(
         params["q"] = f"{search_query} near {location}"
 
     async with httpx.AsyncClient(timeout=60) as client:
-        response = await client.get(SERPAPI_BASE_URL, params=params)
+        response = await client.get(SERPER_URL, params=params)
         response.raise_for_status()
         result = response.json()
 
@@ -233,7 +233,7 @@ async def direction(
     """
     params = {
         "engine": "google_maps_directions",
-        "api_key": SERPAPI_API_KEY,
+        "api_key": SERPER_API_KEY,
     }
 
     # Handle origin
@@ -249,7 +249,7 @@ async def direction(
         params["end_addr"] = destination
 
     async with httpx.AsyncClient(timeout=60) as client:
-        response = await client.get(SERPAPI_BASE_URL, params=params)
+        response = await client.get(SERPER_URL, params=params)
         response.raise_for_status()
         result = response.json()
 
